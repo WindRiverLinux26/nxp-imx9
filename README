@@ -75,7 +75,7 @@ To get a list of patches applied to the kernel specific to this BSP,
 along with patch descriptions, use git to see what changed on the default
 kernel (git whatchanged <kernel_type>..<bsp_name>). For example:
 
-	# cd tmp-glibc/work-shared/nxp-imx9/kernel-source
+	# cd tmp/work-shared/nxp-imx9/kernel-source
 	# git whatchanged standard/base..
 
 
@@ -87,7 +87,7 @@ kernel (git whatchanged <kernel_type>..<bsp_name>). For example:
 
 4.1.1 Prepare Kernel, DTB, NFS and TFTP servers
 -----------------------------------------------
-The files in the following example can be found in <buildprj>/tmp-glibc/deploy/images/nxp-imx9
+The files in the following example can be found in <buildprj>/tmp/deploy/images/nxp-imx9
 and are copied to the export directory of the TFTP server.
 
 4.1.2 Download kernel
@@ -661,7 +661,7 @@ This BSP supports disk images for SD card.
 After build the project, user will get a WIC image under the directory
 tmp/deploy/images/<bsp name>/ ,such as:
 
-tmp-glibc/deploy/images/nxp-imx9/wrlinux-image-<std-sato/std>-nxp-imx9.wic
+tmp/deploy/images/nxp-imx9/wrlinux-image-<std-sato/std>-nxp-imx9.wic
 
 Then user can write the output image to a SD card.
 
