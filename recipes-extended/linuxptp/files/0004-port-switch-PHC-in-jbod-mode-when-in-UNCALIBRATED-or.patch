@@ -1,0 +1,50 @@
+From 61d47af7a8859e97a52e6669a3845f7990de2ad9 Mon Sep 17 00:00:00 2001
+From: Xiaoliang Yang <xiaoliang.yang_1@nxp.com>
+Date: Sun, 20 Apr 2025 05:38:00 +0800
+Subject: [PATCH 4/7] port: switch PHC in jbod mode when in UNCALIBRATED or 
+ SLAVE state
+
+In the (still downstream) patch "Add BMCA support for IEEE
+802.1AS-2011", we are making ieee8021as_fsm() skip the UNCALIBRATED
+state. This means that the PHC on which the servo loop is applied will
+never be switched in JBOD mode. Make the switching logic take place
+either on a MASTER to SLAVE, or on a MASTER to UNCALIBRATED transition.
+
+Signed-off-by: Vladimir Oltean <olteanv@gmail.com>
+Signed-off-by: Xiaoliang Yang <xiaoliang.yang_1@nxp.com>
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Upstream-Status: Pending
+---
+ port.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/port.c b/port.c
+index bb26746..799f843 100644
+--- a/port.c
++++ b/port.c
+@@ -3009,6 +3009,8 @@ void port_dispatch(struct port *p, enum fsm_event event, int mdiff)
+ 
+ static void bc_dispatch(struct port *p, enum fsm_event event, int mdiff)
+ {
++	enum port_state switching_state;
++
+ 	if (clock_slave_only(p->clock)) {
+ 		if (event == EV_RS_GRAND_MASTER) {
+ 			port_slave_priority_warning(p);
+@@ -3029,7 +3031,12 @@ static void bc_dispatch(struct port *p, enum fsm_event event, int mdiff)
+ 		break;
+ 	}
+ 
+-	if (p->jbod && p->state == PS_UNCALIBRATED && p->phc_index >= 0 ) {
++	if (port_is_ieee8021as(p))
++		switching_state = PS_SLAVE;
++	else
++		switching_state = PS_UNCALIBRATED;
++
++	if (p->jbod && p->state == switching_state && p->phc_index >= 0 ) {
+ 		if (clock_switch_phc(p->clock, p->phc_index)) {
+ 			p->last_fault_type = FT_SWITCH_PHC;
+ 			port_dispatch(p, EV_FAULT_DETECTED, 0);
+-- 
+2.34.1
+
