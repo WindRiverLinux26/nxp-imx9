@@ -68,10 +68,9 @@ WARN_TO_ERROR_QA = "already-stripped compile-host-path install-host-path \
 WARN_QA:remove = "${WARN_TO_ERROR_QA}"
 ERROR_QA:append = " ${WARN_TO_ERROR_QA}"
 
-PREFERRED_VERSION_weston:mx9-nxp-bsp = "14.0.1.imx"
+PREFERRED_VERSION_weston:mx9-nxp-bsp = "14.0.2.imx"
 PREFERRED_PROVIDER_virtual/libg2d:mx93-nxp-bsp ?= "imx-pxp-g2d"
-PREFERRED_VERSION_libdrm:mx9-nxp-bsp = "2.4.123.imx"
-PREFERRED_VERSION_wayland-protocols:mx9-nxp-bsp = "1.37.imx"
+PREFERRED_VERSION_libdrm:mx9-nxp-bsp = "2.4.127.imx"
 CUSTOMER_RECIPES:fsl-bsp-release += 'imx-g2d-samples'
 CUSTOMER_RECIPES:fsl-bsp-release += 'mesa'
 CUSTOMER_RECIPES:fsl-bsp-release += 'imx-pxp-g2d'
@@ -79,7 +78,6 @@ CUSTOMER_RECIPES:fsl-bsp-release += 'weston-init'
 CUSTOMER_RECIPES:fsl-bsp-release += 'weston'
 CUSTOMER_RECIPES:freescale-layer += 'xwayland'
 CUSTOMER_RECIPES:fsl-bsp-release += 'linux-imx-headers'
-CUSTOMER_RECIPES:fsl-bsp-release += 'wayland-protocols'
 CUSTOMER_RECIPES:fsl-bsp-release += 'libdrm'
 CUSTOMER_RECIPES:fsl-bsp-release += 'imx-gst1.0-plugin'
 CUSTOMER_RECIPES:fsl-bsp-release += 'imx-parser'
@@ -87,6 +85,25 @@ CUSTOMER_RECIPES:fsl-bsp-release += 'imx-codec'
 CUSTOMER_RECIPES:freescale-layer += 'imx-lib'
 CUSTOMER_RECIPES:openembedded-layer += 'opencl-icd-loader'
 CUSTOMER_RECIPES:openembedded-layer += 'opencl-headers'
+CUSTOMER_RECIPES:fsl-bsp-release += 'libdisplay-info'
+PREFERRED_VERSION_libdisplay-info = "0.1.1"
+
+CUSTOMER_RECIPES:multimedia-layer += 'fdk-aac'
+CUSTOMER_RECIPES:multimedia-layer += 'libfreeaptx'
+CUSTOMER_RECIPES:multimedia-layer += 'pipewire'
+CUSTOMER_RECIPES:multimedia-layer += 'webrtc-audio-processing-2'
+CUSTOMER_RECIPES:multimedia-layer += 'wireplumber'
+CUSTOMER_RECIPES:openembedded-layer += 'jack'
+CUSTOMER_RECIPES:openembedded-layer += 'libopus'
+CUSTOMER_RECIPES:openembedded-layer += 'ne10'
+CUSTOMER_RECIPES:fsl-bsp-release += 'gstreamer1.0-plugins-good'
+CUSTOMER_RECIPES:fsl-bsp-release += 'gstreamer1.0'
+CUSTOMER_RECIPES:fsl-bsp-release += 'gstreamer1.0-plugins-bad'
+CUSTOMER_RECIPES:fsl-bsp-release += 'gstreamer1.0-plugins-base'
+PREFERRED_VERSION_gstreamer1.0:mx9-nxp-bsp  ??= "1.26.6.imx"
+PREFERRED_VERSION_gstreamer1.0-plugins-bad:mx9-nxp-bsp  ??= "1.26.6.imx"
+PREFERRED_VERSION_gstreamer1.0-plugins-good:mx9-nxp-bsp  ??= "1.26.6.imx"
+PREFERRED_VERSION_gstreamer1.0-plugins-base:mx9-nxp-bsp  ??= "1.26.6.imx"
 
 <2> startup we will find that weston starts under g2d acceleration
 
@@ -413,7 +430,7 @@ CUSTOMER_RECIPES:freescale-layer += "firmware-nxp-wifi"
 CUSTOMER_RECIPES:fsl-bsp-release += "imx-m7-demos"
 MACHINE_FEATURES:append:nxp-imx9 = " nxpwifi-all-pcie nxpwifi-all-sdio"
 
-IMAGE_INSTALL:append = " kernel-module-nxp-wlan connman firmware-nxp-wifi-all-sdio firmware-nxp-wifi-all-pcie udev-extraconf"
+IMAGE_INSTALL:append = " kernel-module-nxp-wlan connman firmware-nxp-wifi-all-sdio firmware-nxp-wifi-all-pcie udev-extraconf firmware-nxp-wifi-nxpiw612-sdio"
 
 MACHINE_FIRMWARE:append:nxp-imx9 = " firmware-nxp-wifi-all-sdio"
 MACHINE_FIRMWARE:append:nxp-imx9 = " firmware-nxp-wifi-all-pcie"
