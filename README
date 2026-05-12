@@ -594,6 +594,31 @@ imx93:
 Use wireshark to open tsn.pcap, 100 µs queue 1 frames (length=1004) and 100 µs queue 2 frames
 (length=1504) will be got.
 
+4) Qbu
+------
+
+Preemption verification
+
+Connect eth1 of two boards back to back. Then, run below command to enable the hardware verification:
+
+ethtool --set-mm end1 tx-enabled on pmac-enabled on verify-enabled on tx-min-frag-size 60
+
+After that, make the link down and then up to enable the verify mPacket and response mPacket to be
+exchanged between two boards. Run below command to show the preemption status.
+
+ethtool --show-mm eth1
+
+MAC Merge layer state for eth1:
+pMAC enabled: on
+TX enabled: on
+TX active: on
+TX minimum fragment size: 60
+RX minimum fragment size: 60
+Verify enabled: on
+Verify time: 128
+Max verify time: 128
+Verification status: SUCCEEDED
+
 5.12 EdgeLock Secure Enclave
 ----------------------------
 
