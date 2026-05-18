@@ -423,7 +423,7 @@ There is an official recommended BT/WIFI module(LBES5PL2EL, NXP IW612 chipset) f
 
 Add below contents into local.conf to support for WIFI feature.
 
-CUSTOMER_RECIPES:fsl-bsp-release += "kernel-module-nxp-wlan"
+CUSTOMER_RECIPES:freescale-layer += "kernel-module-nxp-wlan"
 CUSTOMER_RECIPES:fsl-bsp-release += "wireless-tools"
 CUSTOMER_RECIPES:fsl-bsp-release += "nxp-wlan-sdk"
 CUSTOMER_RECIPES:freescale-layer += "firmware-nxp-wifi"
