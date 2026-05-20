@@ -1,4 +1,4 @@
-        MCIMX93-EVK/MCIMX95-VERDIN-EVK/MCIMX93-FRDM Board Support Package
+        MCIMX93-EVK/MCIMX93-FRDM Board Support Package
 
 1. About this document
 ======================
@@ -127,16 +127,6 @@ MCIMX93-EVK:
 	If user wants to enable lpuart:
 	tftp $fdt_addr imx93-11x11-evk-lpuart.dtb
 
-MCIMX95-VERDIN-EVK:
-	Default dtb:
-	tftp $fdt_addr imx95-19x19-verdin.dtb
-
-	If user wants to enable HDMI:
-	tftp $fdt_addr imx95-19x19-verdin-lt8912.dtb
-
-	If user wants to enable os08a20:
-	tftp $fdt_addr imx95-19x19-verdin-os08a20.dtb
-
 MCIMX93-FRDM:
 	Default dtb:
 	tftp $fdt_addr imx93-11x11-frdm.dtb
@@ -158,7 +148,6 @@ MCIMX93-FRDM:
 
 Note: for MCIMX93-EVK/MCIMX93-FRDM board, $kernel_addr="0x80400000", $fdt_addr="0x83000000"
 	$console_port = "ttyLP0,115200"
-      for MCIMX95-VERDIN-EVK board, $kernel_addr="0x90400000", $fdt_addr="0x93000000"
       The kernel image will become larger if more kernel code is compiled into kernel image.
       So, please increase "fdt_addr" value by putting dtb file at higher address if you encounter with kernel booting failed.
 
@@ -352,45 +341,6 @@ Connect a 4-segment headset with microphone to J13, and then run below command t
 
 	 # aplay -twav -r 48000 -Dhw:3,0 -c 6 record.wav
 
-5.7.5 Audio with codec WM8904(i.MX95-19x19-verdin)
---------------------------------------------------
-
-J31 is a microphone interface
-
-1) Test audio playback with below command
-	aplay -l
-		card 2: wm8904audio [wm8904-audio], device 0: HiFi wm8904-hifi-0 [HiFi wm8904-hifi-0]
-			Subdevices: 1/1
-			Subdevice #0: subdevice #0
-
-	speaker-test -c2 -twav -Dhw:2,0
-
-2) Test audio record with below command
-
-         # arecord -l
-         ......
-	 arecord -l
-		**** List of CAPTURE Hardware Devices ****
-		card 0: btscoaudio [bt-sco-audio], device 0: sai-tx-rx-bt-sco-pcm-wb bt-sco-pcm-wb-0 [sai-tx-rx-bt-sco-pcm-wb bt-sco-pcm
-		-wb-0]
-		  Subdevices: 1/1
-		  Subdevice #0: subdevice #0
-		card 1: micfilaudio [micfil-audio], device 0: micfil hifi snd-soc-dummy-dai-0 [micfil hifi snd-soc-dummy-dai-0]
-		  Subdevices: 1/1
-		  Subdevice #0: subdevice #0
-		card 2: wm8904audio [wm8904-audio], device 0: HiFi wm8904-hifi-0 [HiFi wm8904-hifi-0]
-		  Subdevices: 1/1
-		  Subdevice #0: subdevice #0
-
-	# The MIC input of the AUDIO CODEC WM8904 on the iMX95 EVK is routed to IN2L.
-	amixer -c 2 set "Capture" cap
-	amixer -c 2 set 'Left Capture Inverting Mux' 'IN2L'
-	amixer -c 2 set 'Right Capture Inverting Mux' 'IN2R'
-	amixer -c 2 set 'Capture' '31'
-	arecord -D hw:2,0 -V mono -c 2 -f S16_LE -r 48000 -t wav mic.wav
-
-	aplay mic.wav -Dhw:2,0
-
 5.8 FLEXCAN
 -----------
 
@@ -402,14 +352,6 @@ Currently
    pin 6 is ground, and pins 8 and 10 are CAN_H and CAN_L, respectively.
    Simultaneously, sw3 pins 1 and 2 need to be set to ON, and sw4 also
    needs to be set to ON.
- imx95 J27 is a can0 interface, can1 is disabled by default due to pin conflict with PDM.
-     Since the pin numbers are not listed on the board, they are shown in the picture.
-	      -----
-	      |   |
-	      |   |
-	CAN_H |   | CAN_L
-	GND   |   | PIN1
-	      -----
 
 respectively. Please use a board that supports canfd function to connect, such as imx8qm-mek.
 
@@ -467,10 +409,6 @@ cat /sys/devices/platform/imx93-lpm/mode
 
 5.11 TSN (Only i.MX93)
 ----------------------
-
-NOTE. According to https://www.nxp.com/docs/en/release-note/RN00161.pdf,
-      chapter 5 Feature support matrix, the Real-time Networking part is
-      still not released on the i.MX95 platform.
 
 Use two imx93 boards end1 to connect
 
@@ -727,14 +665,6 @@ u-boot=>run bootcmd
 For MCIMX93-FRDM board:
 
 u-boot=>setenv fdt_file imx93-11x11-frdm.dtb
-u-boot=>setenv bootfile Image
-u-boot=>setenv bootargs "root=/dev/mmcblk1p2 rw rootdelay=5 console=${console},${baudrate} earlycon ip=dhcp"
-u-boot=>setenv bootcmd 'fatload mmc 1:1 $loadaddr $bootfile; fatload mmc 1:1 $fdt_addr $fdt_file; booti $loadaddr - $fdt_addr';
-u-boot=>run bootcmd
-
-For MCIMX95-VERDIN-EVK board:
-
-u-boot=>setenv fdt_file imx95-19x19-verdin.dtb
 u-boot=>setenv bootfile Image
 u-boot=>setenv bootargs "root=/dev/mmcblk1p2 rw rootdelay=5 console=${console},${baudrate} earlycon ip=dhcp"
 u-boot=>setenv bootcmd 'fatload mmc 1:1 $loadaddr $bootfile; fatload mmc 1:1 $fdt_addr $fdt_file; booti $loadaddr - $fdt_addr';
