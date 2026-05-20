@@ -1,4 +1,4 @@
-        MCIMX93-EVK/MCIMX95-VERDIN-EVK Board Support Package
+        MCIMX93-EVK/MCIMX95-VERDIN-EVK/MCIMX93-FRDM Board Support Package
 
 1. About this document
 ======================
@@ -12,6 +12,7 @@ This layer depends on the following layers supplied with Wind River Linux:
   oe-core
   meta-imx
   meta-freescale
+  meta-freescale-ml
 
 Maintenance
 -----------
@@ -26,7 +27,7 @@ is done automatically when using the Wind River configure wrapper.
 
 License
 -------
-Copyright (C) 2025 Wind River Systems, Inc.
+Copyright (C) 2026 Wind River Systems, Inc.
 
 Source code included in the tree for individual recipes is under the LICENSE
 stated in the associated recipe (.bb file) unless otherwise stated.
@@ -136,6 +137,16 @@ MCIMX95-VERDIN-EVK:
 	If user wants to enable os08a20:
 	tftp $fdt_addr imx95-19x19-verdin-os08a20.dtb
 
+MCIMX93-FRDM:
+	Default dtb:
+	tftp $fdt_addr imx93-11x11-frdm.dtb
+
+	If user wants to enable low power mode:
+	tftp $fdt_addr imx93-11x11-frdm-ld.dtb
+
+	If user wants to connect MX93AUD-HAT sub-board:
+	tftp $fdt_addr imx93-11x11-frdm-aud-hat.dtb
+
 4.1.5 Set bootargs and boot the system
 --------------------------------------
 
@@ -145,7 +156,7 @@ MCIMX95-VERDIN-EVK:
 		 video=HDMI-A-1:1920x1080-32@60
 	# booti $kernel_addr - $fdt_addr
 
-Note: for MCIMX93-EVK board, $kernel_addr="0x80400000", $fdt_addr="0x83000000"
+Note: for MCIMX93-EVK/MCIMX93-FRDM board, $kernel_addr="0x80400000", $fdt_addr="0x83000000"
 	$console_port = "ttyLP0,115200"
       for MCIMX95-VERDIN-EVK board, $kernel_addr="0x90400000", $fdt_addr="0x93000000"
       The kernel image will become larger if more kernel code is compiled into kernel image.
@@ -253,8 +264,8 @@ with the bootloader.
 5.7 Audio
 ---------
 
-5.7.1 Audio with codec WM8962B
-------------------------------
+5.7.1 Audio with codec WM8962B(iMX93-EVK)
+-----------------------------------------
 
 Connect a 4-segment headset with microphone to J1201.
 
@@ -297,8 +308,8 @@ Audio play with below command:
 	 # aplay record.wav -Dhw:3,0
 
 
-5.7.3 MQS(Medium quality sound)
--------------------------------
+5.7.3 MQS(iMX93-EVK and iMX93-FRDM)
+-----------------------------------
 
 Connect a 4-segment headset with microphone to J1301. Boot up board with dtb imx93-11x11-evk-mqs.dtb,
 and then run below comamnd to test audio play.
@@ -306,8 +317,8 @@ and then run below comamnd to test audio play.
 	 # speaker-test -c2 -twav -Dhw:0,0
 
 
-5.7.4 MX93AUD-HAT Audio extend card
------------------------------------
+5.7.4 MX93AUD-HAT Audio extend card(iMX93-EVK and iMX93-FRDM)
+-------------------------------------------------------------
 
 Connect the MX93AUD-HAT board to the J1001 MCIMX93-EVK board, and then boot up board with
 imx93-11x11-evk-aud-hat.dtb file.
@@ -387,6 +398,10 @@ Detail verification commands as below:
 
 Currently
  imx93 J1101 is a can interface, 1-4 are 5V, CAN_H, CAN_L, and GND.
+ The iMX93-FRDM has a 10-pin header with a CAN interface on pin P12, 
+   pin 6 is ground, and pins 8 and 10 are CAN_H and CAN_L, respectively.
+   Simultaneously, sw3 pins 1 and 2 need to be set to ON, and sw4 also
+   needs to be set to ON.
  imx95 J27 is a can0 interface, can1 is disabled by default due to pin conflict with PDM.
      Since the pin numbers are not listed on the board, they are shown in the picture.
 	      -----
@@ -445,6 +460,8 @@ You can switch to Low Drive Mode with below command:
 
 echo 1 > /sys/devices/platform/imx93-lpm/mode
 System switching to ND mode...
+echo 2 > /sys/devices/platform/imx93-lpm/mode
+System switching to LD/SWFFC mode...
 
 cat /sys/devices/platform/imx93-lpm/mode
 
@@ -702,6 +719,14 @@ Then user can write the output image to a SD card.
 For MCIMX93-EVK board:
 
 u-boot=>setenv fdt_file imx93-11x11-evk.dtb
+u-boot=>setenv bootfile Image
+u-boot=>setenv bootargs "root=/dev/mmcblk1p2 rw rootdelay=5 console=${console},${baudrate} earlycon ip=dhcp"
+u-boot=>setenv bootcmd 'fatload mmc 1:1 $loadaddr $bootfile; fatload mmc 1:1 $fdt_addr $fdt_file; booti $loadaddr - $fdt_addr';
+u-boot=>run bootcmd
+
+For MCIMX93-FRDM board:
+
+u-boot=>setenv fdt_file imx93-11x11-frdm.dtb
 u-boot=>setenv bootfile Image
 u-boot=>setenv bootargs "root=/dev/mmcblk1p2 rw rootdelay=5 console=${console},${baudrate} earlycon ip=dhcp"
 u-boot=>setenv bootcmd 'fatload mmc 1:1 $loadaddr $bootfile; fatload mmc 1:1 $fdt_addr $fdt_file; booti $loadaddr - $fdt_addr';
