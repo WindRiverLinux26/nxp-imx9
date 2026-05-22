@@ -131,11 +131,11 @@ SW1301  OFF     OFF     OFF     OFF
 The following table shows the boot switch setup for SD2 boot
 
 Switch  D1      D2      D3      D4
-SW1301  OFF     OFF     ON      ON
+SW1     ON      ON      OFF     OFF
 
 2. Booting from eMMC
 
 The following table shows the boot switch settings to boot from eMMC MTFC16GAKAECN-2M.
 
 Switch  D1      D2      D3      D4
-SW1301  OFF     OFF     ON      OFF
+SW1     OFF     ON      OFF     OFF
