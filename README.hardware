@@ -63,7 +63,7 @@ The following BSP features are validated and supported.
 	+ LVDS LCD (iMX93-EVK Only)
 		+ LVDS LCD: DY1212W-4856
 	+ MIPI CSI Host Controller:
-		+ RPI-CAM-MIPI AR0144 sensor (iMX93-EVK Only)
+		+ RPI-CAM-MIPI AR0144 sensor (iMX93-EVK and iMX93-FRDM)
 	+ GPU: PXP G2D (iMX93-EVK and iMX93-FRDM)
 	+ NPU: Arm Ethos-U65 microNPU (iMX93-EVK and iMX93-FRDM)
 
