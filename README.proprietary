@@ -115,20 +115,20 @@ PREFERRED_VERSION_gstreamer1.0-plugins-base:mx9-nxp-bsp  ??= "1.26.6.imx"
 Since some use cases also rely on graphics, this part is based on the 2.1
 graphics acceleration part.
 
-CUSTOMER_RECIPES:imx-machine-learning += 'tensorflow-lite'
-CUSTOMER_RECIPES:imx-machine-learning += 'tensorflow-lite-host-tools-native'
-CUSTOMER_RECIPES:imx-machine-learning += 'flatbuffers'
-CUSTOMER_RECIPES:imx-machine-learning += 'python3-flatbuffers'
+CUSTOMER_RECIPES:meta-freescale-ml += 'tensorflow-lite'
+CUSTOMER_RECIPES:meta-freescale-ml += 'tensorflow-lite-host-tools'
+CUSTOMER_RECIPES:meta-freescale-ml += 'flatbuffers'
+CUSTOMER_RECIPES:meta-freescale-ml += 'python3-flatbuffers'
 PREFERRED_VERSION_flatbuffers:mx9-nxp-bsp = "24.3.25"
 PREFERRED_VERSION_python3-flatbuffers:mx9-nxp-bsp = "24.3.25"
-PREFERRED_VERSION_tensorflow-lite:mx9-nxp-bsp = '2.18.0'
+PREFERRED_VERSION_tensorflow-lite:mx9-nxp-bsp = '2.19.0'
 
 # iMX93 configuration
-CUSTOMER_RECIPES:imx-machine-learning += 'tensorflow-lite-ethosu-delegate'
-CUSTOMER_RECIPES:imx-machine-learning += 'ethos-u-firmware'
-CUSTOMER_RECIPES:imx-machine-learning += 'ethos-u-driver-stack'
-CUSTOMER_RECIPES:imx-machine-learning += 'ethos-u-vela'
-CUSTOMER_RECIPES:imx-machine-learning += 'eiq-examples'
+CUSTOMER_RECIPES:meta-freescale-ml += 'tensorflow-lite-ethosu-delegate'
+CUSTOMER_RECIPES:meta-freescale-ml += 'ethos-u-firmware'
+CUSTOMER_RECIPES:meta-freescale-ml += 'ethos-u-driver-stack'
+CUSTOMER_RECIPES:meta-freescale-ml += 'ethos-u-vela'
+CUSTOMER_RECIPES:meta-freescale-ml += 'eiq-examples'
 IMAGE_INSTALL:append = " ethos-u-firmware ethos-u-driver-stack ethos-u-vela eiq-examples tensorflow-lite-ethosu-delegate python3-setuptools"
 
 # iMX93 test
