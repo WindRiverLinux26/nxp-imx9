@@ -554,16 +554,16 @@ Use wireshark to open tsn.pcap, 100 µs queue 1 frames (length=1004) and 100 µs
 
 Preemption verification
 
-Connect eth1 of two boards back to back. Then, run below command to enable the hardware verification:
+Connect end1 of two boards back to back. Then, run below command to enable the hardware verification:
 
 ethtool --set-mm end1 tx-enabled on pmac-enabled on verify-enabled on tx-min-frag-size 60
 
 After that, make the link down and then up to enable the verify mPacket and response mPacket to be
 exchanged between two boards. Run below command to show the preemption status.
 
-ethtool --show-mm eth1
+ethtool --show-mm end1
 
-MAC Merge layer state for eth1:
+MAC Merge layer state for end1:
 pMAC enabled: on
 TX enabled: on
 TX active: on
