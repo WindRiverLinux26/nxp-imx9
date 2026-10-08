@@ -94,7 +94,7 @@ MCIMX93-EVK:
 	 CPU Revision:          rev1.1
 	 Board Revision:        MCIMX93-EVK SCH-51961 REV B5, 700-51961 REV B5
 	 BootLoader:            U-Boot
-	 BootLoader Version:    U-Boot 2024.04-lf_v2024.04+ge3219a5a734+p0 (Feb 18 2025 - 04:03:02 +0000)
+	 BootLoader Version:    U-Boot 2026.04-lf_v2026.04+g6eeef838+p0 (Jun 02 2026 - 15:03:39 +0000)
 
 MCIMX93-FRDM:
 	Processor:             IMX93
